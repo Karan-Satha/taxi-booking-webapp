@@ -169,11 +169,11 @@ if (isset($_POST["submit"])) {
         $mail->isSMTP(); //Set PHPMailer to use SMTP.
         $mail->Host = "smtp.gmail.com"; //Set SMTP host name
         $mail->SMTPAuth = true; //Set this to true if SMTP host requires authentication to send email
-        $mail->Username = "jamunatharan@gmail.com"; //Provide username and password
-        $mail->Password = "musebh9Hj";
+        $mail->Username = "******************"; //Provide username and password
+        $mail->Password = "***********";
         $mail->SMTPSecure = "tls"; //If SMTP requires TLS encryption then set it
         $mail->Port = 587; //Set TCP port to connect to
-        $mail->From = "jamunatharan@gmail.com";
+        $mail->From = "***************";
         $mail->FromName = "Heathrow Drive";
         $mail->addAddress($_SESSION["uemail"], $_SESSION["uname"]);
         $mail->isHTML(true);
