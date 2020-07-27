@@ -1,24 +1,23 @@
 <header>
     <nav>
-
         <!-- Logo  -->
-
         <div class="navMainContainer">
-            <div class="logoLocationC">
-                <i class="fas fa-map-marker-alt">
-                    <div class="logoCar">
-                        <i class="fas fa-taxi"></i>
-                    </div>
-                </i>
-            </div>
+            <a href="index.php"><img src="./images/logo.jpg" /></a>
         </div>
-        <div class="logoNameC">
-            <p name="duration">Heathrow</p>
-            <p>Drive</p>
+        <!-- Login and register link -->
+        <div class="userLink">
+            <?php if (isset($_SESSION["user"])) {?>
+            <p>Hi, <strong><?php echo $_SESSION["user"]; ?></strong></p>
+            <?php }?>
+            <?php if (isset($_SESSION["user"])) {?>
+            <a class="logout" href="logout.php">(Sign out)</a>
+            <?php } else {?>
+            <a href="register.php">Signup</a>
+            <a href="login.php">Login</a>
+            <?php }?>
+            <i class="fas fa-user"></i>
         </div>
-
         <!-- Toggle button  -->
-
         <div class="toggleNavContainer">
             <div class="navInnerContainer" id="zoomOutDiv">
                 <div class="navIconContainer">

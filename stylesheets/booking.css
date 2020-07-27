@@ -15,16 +15,98 @@ body {
   background-color: #f3fbfe;
 }
 
-.checkMain {
-  width: 95%;
-  height: 40px;
-  margin: 30px auto 0px auto;
+.loader {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 5px solid #af81c9;
+  border-top-color: #e5e5e5;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 -30px;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+  z-index: 1000;
+}
+
+.loadBackground {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  -webkit-transition: 1s;
+  transition: 1s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  visibility: hidden;
+}
+
+.loadBackground .loaderSubmit {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 5px solid #af81c9;
+  border-top-color: #e5e5e5;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+  z-index: 1000;
+}
+
+.loadBackground h3 {
+  z-index: 1000;
+  color: #ffffff;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.checkMain {
+  width: 95%;
+  height: 80px;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: width 0.25s;
+  transition: width 0.25s;
 }
 
 .checkMain .checkMainLine {
@@ -108,9 +190,16 @@ body {
 .bookingMain .journeyInfo {
   height: 500px;
   width: 40%;
-  margin-top: 30px;
   background-color: #ffffff;
   float: left;
+}
+
+.bookingMain .journeyInfo .journeyInfoDetail:nth-child(6) {
+  border-bottom: 0px solid #e5e5e5;
+}
+
+.bookingMain .journeyInfo .journeyInfoDetail:nth-child(7) {
+  border-bottom: 0px solid #e5e5e5;
 }
 
 .bookingMain .journeyInfo .journeyInfoDetail {
@@ -124,6 +213,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
 }
 
 .bookingMain .journeyInfo .journeyInfoDetail label {
@@ -141,6 +231,16 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.bookingMain .journeyInfo .journeyInfoDetail .edit {
+  position: absolute;
+  right: 5%;
+}
+
+.bookingMain .journeyInfo .journeyInfoDetail .edit i {
+  font-size: 1em;
+  margin-right: 5px;
 }
 
 .bookingMain .journeyInfo img {
@@ -177,7 +277,6 @@ body {
   width: 57%;
   background-color: #ffffff;
   float: right;
-  margin-top: 30px;
 }
 
 .bookingMain .userInfo .heading {
@@ -281,8 +380,8 @@ body {
 }
 
 .errorMsg {
-  background-color: #fce0e8;
-  padding: 6px 9px;
+  background-color: #feeef3;
+  padding: 7px 9px;
   position: relative;
   margin-top: 12px;
   margin-bottom: 5px;
@@ -310,7 +409,32 @@ body {
   border: solid 8px transparent;
   top: -15px;
   left: 15px;
-  border-bottom-color: #fce0e8;
+  border-bottom-color: #feeef3;
+}
+
+.formInvalidMsg {
+  width: 80%;
+  margin: 10px auto 15px auto;
+  padding: 15px 15px;
+  background-color: #e4134f;
+  color: #ffffff;
+  position: relative;
+}
+
+.formInvalidMsg i {
+  font-size: 13px;
+  margin-right: 10px;
+  margin-top: 4px;
+  float: left;
+}
+
+.formInvalidMsg:before {
+  content: "";
+  position: absolute;
+  border: solid 8px transparent;
+  bottom: -15px;
+  left: 48%;
+  border-top-color: #e4134f;
 }
 
 #phone {
@@ -373,8 +497,8 @@ textarea:focus {
   outline: none;
   border-style: none;
   border: 3px solid #e4134f;
-  -webkit-box-shadow: 0px 0px 0px 3px #fce0e8;
-          box-shadow: 0px 0px 0px 3px #fce0e8;
+  -webkit-box-shadow: 0px 0px 0px 3px #feeef3;
+          box-shadow: 0px 0px 0px 3px #feeef3;
 }
 
 .heading {
@@ -387,6 +511,7 @@ textarea:focus {
           align-items: center;
   width: 100%;
   background-color: #dedef8;
+  position: relative;
 }
 
 .heading h2 {
@@ -394,11 +519,33 @@ textarea:focus {
   font-size: 1.2em;
 }
 
+.heading .edit {
+  position: absolute;
+  right: 5%;
+}
+
+.heading .edit a {
+  font-weight: bold;
+}
+
+.heading .edit a i {
+  font-size: 1em;
+  margin-right: 5px;
+}
+
 .bookNowBtn {
   margin: 30px auto;
   display: block;
   width: 60%;
-  height: 40px;
+  height: 45px;
+  font-size: 1.1em;
+}
+
+.bookNowBtn:hover {
+  position: relative;
+  top: 2px;
+  -webkit-box-shadow: 0 3px #162a3a;
+          box-shadow: 0 3px #162a3a;
 }
 
 #paypal-button-container {
@@ -412,12 +559,15 @@ textarea:focus {
   margin-top: 0px;
   z-index: 1;
   background-color: #f3fbfe;
-  height: 75px;
+  width: 100%;
+  height: 80px;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
   -webkit-box-shadow: 0 8px 6px -9px #e5e5e5;
           box-shadow: 0 8px 6px -9px #e5e5e5;
   border-bottom: 0.5px solid #e5e5e5;
+  -webkit-transition: width 0.25s;
+  transition: width 0.25s;
 }
 /*# sourceMappingURL=booking.css.map */

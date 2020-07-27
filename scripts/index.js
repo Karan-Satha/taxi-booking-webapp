@@ -5,13 +5,31 @@ const element = (id) => {
   return document.querySelector(id);
 };
 
+const elementAll = (id) => {
+  return document.querySelectorAll(id);
+};
+
+// Load animation on page load
+const loadJourney = () => {
+  setTimeout(function () {
+    elementAll(".journeyLoad").forEach((loader) => {
+      loader.style.visibility = "hidden";
+    });
+    elementAll(".serviceType").forEach((content) => {
+      content.style.visibility = "visible";
+    });
+  }, 500);
+};
+loadJourney();
+
 document.onreadystatechange = function () {
-  if (document.readyState !== "complete") {
-    document.querySelector("body").style.visibility = "hidden";
-    document.querySelector("#loader").style.visibility = "visible";
-  } else {
-    document.querySelector("#loader").style.display = "none";
-    document.querySelector("body").style.visibility = "visible";
+  let state = document.readyState;
+  if (state == "interactive") {
+    element("body").style.visibility = "hidden";
+    element("#loader").style.visibility = "visible";
+  } else if (state == "complete") {
+    element("#loader").style.visibility = "hidden";
+    element("body").style.visibility = "visible";
   }
 };
 
@@ -20,12 +38,6 @@ const [
   dropOffLocationInput,
   dateInput,
   timeInput,
-  pickUpBgColor,
-  dropOffBgColor,
-  dateBgColor,
-  timeBgColor,
-  pickUpValidationMsg,
-  dropOffValidationMsg,
   dateValidationMsg,
   timeValidationMsg,
   journeyDetail,
@@ -34,16 +46,22 @@ const [
   element("#dropOffLocation"),
   element("#date"),
   element("#time"),
-  element("#inputPickContainer").classList,
-  element("#inputDropContainer").classList,
-  element("#inputDateContainer").classList,
-  element("#inputTimeContainer").classList,
-  element("#pickUpAddressValid"),
-  element("#dropOffAddressValid"),
   element("#dateValid"),
   element("#timeValid"),
   element(".journeyMain"),
 ];
+
+const errorMsg = {
+  pickEmpty: "Please enter pickup address",
+  dropEmpty: "Please enter dropoff address",
+  tripDate: {
+    empty: "Please select the date",
+    yearError: "Please check the year",
+    monthError: "Please check the month",
+    dateError: "Please check the date",
+  },
+  timeEmpty: "Please select the time",
+};
 
 //Smooth scroll
 const scrollTo = (elem) => {
@@ -94,6 +112,52 @@ function initAutocomplete() {
   });
 }
 
+// Handle input data
+const handler = (event) => {
+  let input = event.target;
+  let errorDisplay = input.parentElement.nextElementSibling;
+  let inputMargin = input.parentElement.parentElement;
+
+  // Add CSS to input fields on focus
+  let addOnFocus = () => {
+    input.classList.remove("error");
+    input.classList.add("focus");
+    errorDisplay.style.display = "none";
+    inputMargin.style.marginBottom = "15px";
+  };
+
+  // Add CSS to input fields on focusout
+  let addFocusOut = (msg) => {
+    input.classList.add("error");
+    errorDisplay.style.display = "block";
+    inputMargin.style.marginBottom = "3px";
+    return (input.parentElement.nextElementSibling.lastElementChild.innerHTML = msg);
+  };
+
+  // Add focus class on focus
+  if (event.type == "focus") {
+    addOnFocus();
+
+    // Check name on focusout
+  } else if (event.type == "blur") {
+    if (input.value === "" && input.id === "pickUpLocation") {
+      addFocusOut(errorMsg.pickEmpty);
+    } else if (input.value === "" && input.id === "dropOffLocation") {
+      addFocusOut(errorMsg.dropEmpty);
+    } else if (input.value === "" && input.id === "time") {
+      addFocusOut(errorMsg.timeEmpty);
+    } else {
+      input.classList.remove("focus");
+    }
+  }
+};
+
+// Add event handler to input fields
+document.querySelectorAll(".userInputAddress, .userInput").forEach((input) => {
+  input.addEventListener("focus", handler);
+  input.addEventListener("blur", handler);
+});
+
 // Clear input field if not selected from dropdown
 $(".userInputAddress")
   .on("focus", function () {
@@ -105,142 +169,36 @@ $(".userInputAddress")
     }
   });
 
-// Add blue shadow border to pickup-address field
-const addPickBgBlue = () => {
-  pickUpBgColor.remove("changeBgPurple");
-  pickUpBgColor.add("changeBgBlue");
-};
-
-// Add blue shadow border to dropoff-address field
-const addDropBgBlue = () => {
-  dropOffBgColor.remove("changeBgPurple");
-  dropOffBgColor.add("changeBgBlue");
-};
-
-// Add blue shadow border to date field
-const addDateBgBlue = () => {
-  dateBgColor.remove("changeBgPurple");
-  dateBgColor.add("changeBgBlue");
-};
-
-// Add blue shadow border to time field
-const addTimeBgBlue = () => {
-  timeBgColor.remove("changeBgPurple");
-  timeBgColor.add("changeBgBlue");
-};
-
-// Add purple shadow border and validation msg to pickup-address field
-const addPickBgPurple = () => {
-  pickUpValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please enter a valid address`;
-  pickUpBgColor.remove("changeBgBlue");
-  pickUpBgColor.add("changeBgPurple");
-  pickUpLocationInput.classList.add("changeBorderPurple");
-};
-
-// Add purple shadow border and validation msg to dropoff-address field
-const addDropBgPurple = () => {
-  dropOffValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please enter a valid address`;
-  dropOffBgColor.remove("changeBgBlue");
-  dropOffBgColor.add("changeBgPurple");
-  dropOffLocationInput.classList.add("changeBorderPurple");
-};
-
-// Add purple shadow border and validation msg to date field
-const addDateBgPurple = () => {
-  dateValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please enter a valid date`;
-  dateBgColor.remove("changeBgBlue");
-  dateBgColor.add("changeBgPurple");
-  dateInput.classList.add("changeBorderPurple");
-};
-
-// Add purple shadow border and validation msg to time field
-const addTimeBgPurple = () => {
-  timeValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please enter a valid time`;
-  timeBgColor.remove("changeBgBlue");
-  timeBgColor.add("changeBgPurple");
-  timeInput.classList.add("changeBorderPurple");
-};
-
-// Remove purple shadow border and validation msg from pickup-address field
-const removePickBgPurple = () => {
-  pickUpValidationMsg.innerHTML = "";
-  pickUpBgColor.remove("changeBgPurple", "changeBgBlue");
-  pickUpLocationInput.classList.remove("changeBorderPurple");
-};
-
-// Remove purple shadow border and validation msg from dropoff-address field
-const removeDropBgPurple = () => {
-  dropOffValidationMsg.innerHTML = "";
-  dropOffBgColor.remove("changeBgPurple", "changeBgBlue");
-  dropOffLocationInput.classList.remove("changeBorderPurple");
-};
-
-// Remove purple shadow border and validation msg from date field
-const removeDateBgPurple = () => {
-  dateValidationMsg.innerHTML = "";
-  dateBgColor.remove("changeBgPurple", "changeBgBlue");
-  dateInput.classList.remove("changeBorderPurple");
-};
-
-// Remove purple shadow border and validation msg from time field
-const removeTimeBgPurple = () => {
-  timeValidationMsg.innerHTML = "";
-  timeBgColor.remove("changeBgPurple", "changeBgBlue");
-  timeInput.classList.remove("changeBorderPurple");
-};
-
-// Add blue border to pickup-address field on focus
-pickUpLocationInput.addEventListener("focus", () => {
-  addPickBgBlue();
-});
-
-// Add purple border to pickup-address field on focusout
-pickUpLocationInput.addEventListener("focusout", () => {
-  if (pickUpLocationInput.value === "") {
-    addPickBgPurple();
-  }
-
-  if (pickUpLocationInput.value !== "") {
-    removePickBgPurple();
-  }
-});
-
-// Add blue border to dropoff-address field on focus
-dropOffLocationInput.addEventListener("focus", () => {
-  addDropBgBlue();
-});
-
-// Add purple border to dropoff-address field on focusout
-dropOffLocationInput.addEventListener("focusout", () => {
-  if (dropOffLocationInput.value === "") {
-    addDropBgPurple();
-  }
-  if (dropOffLocationInput.value !== "") {
-    removeDropBgPurple();
-  }
-});
-
-// Add blue border to date field on focus
-dateInput.addEventListener("focus", () => {
-  addDateBgBlue();
-});
-
 // Validate date function
 const validateDate = () => {
-  const [datePicker, today, dateValue] = [
+  // Add CSS to input fields on focusout
+  let addFocusOut = (msg) => {
+    dateInput.classList.add("error");
+    dateInput.parentElement.nextElementSibling.style.display = "block";
+    return (dateInput.parentElement.nextElementSibling.lastElementChild.innerHTML = msg);
+  };
+
+  // Remove CSS to input fields on success
+  let removeError = () => {
+    dateInput.classList.remove("error");
+    dateInput.parentElement.nextElementSibling.style.display = "none";
+    dateInput.parentElement.nextElementSibling.lastElementChild.innerHTML = "";
+  };
+
+  let [datePicker, today, dateValue] = [
     new Date(dateInput.value),
     new Date(),
     dateInput.value,
   ];
 
   // Assign variables
-  const [datePickerYear, datePickerMonth, datePickerDate] = [
+  let [datePickerYear, datePickerMonth, datePickerDate] = [
     datePicker.getFullYear(),
     datePicker.getMonth(),
     datePicker.getDate(),
   ];
 
-  const [currentYear, currentMonth, currentDate] = [
+  let [currentYear, currentMonth, currentDate] = [
     today.getFullYear(),
     today.getMonth(),
     today.getDate(),
@@ -248,40 +206,34 @@ const validateDate = () => {
 
   // Check the field if it is empty
   if (dateValue === "") {
-    addDateBgPurple();
-  }
-
-  // Check the field if it is not empty
-  if (dateValue !== "") {
-    removeDateBgPurple();
+    addFocusOut(errorMsg.tripDate.empty);
   }
 
   // Check the year valid
-  if (datePickerYear < currentYear) {
-    addDateBgPurple();
-    dateValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please check the year`;
+  else if (datePickerYear < currentYear) {
+    addFocusOut(errorMsg.tripDate.yearError);
   }
 
   // Check the year and month valid
-  if (datePickerYear <= currentYear && datePickerMonth < currentMonth) {
-    addDateBgPurple();
-    dateValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please check the month`;
+  else if (datePickerYear <= currentYear && datePickerMonth < currentMonth) {
+    addFocusOut(errorMsg.tripDate.monthError);
   }
 
   // Check the year, month, and date valid
-  if (
+  else if (
     datePickerYear <= currentYear &&
     datePickerMonth <= currentMonth &&
     datePickerDate < currentDate
   ) {
-    addDateBgPurple();
-    dateValidationMsg.innerHTML = `<i class="fas fa-info-circle"></i> Please check the date`;
+    addFocusOut(errorMsg.tripDate.dateError);
+  } else {
+    removeError();
   }
 };
 
 // Bind two events to date input element
-["focusout", "change"].forEach(function (e) {
-  dateInput.addEventListener(e, validateDate, false);
+["focusout", "change"].forEach(function (event) {
+  dateInput.addEventListener(event, validateDate, false);
 });
 
 // Set date placeholder
@@ -297,43 +249,32 @@ for (let i = 0; i < 24; i++) {
     timeInput.add(new Option(i + ":" + halfHour[j]));
   }
 }
-
-timeInput.addEventListener("focus", () => {
-  addTimeBgBlue();
-});
-
-timeInput.addEventListener("focusout", () => {
-  let selectedTime = timeInput.value;
-  if (selectedTime === "") {
-    addTimeBgPurple();
-  }
-  if (selectedTime !== "") {
-    removeTimeBgPurple();
-  }
-});
-
-timeInput.addEventListener("change", () => {
-  let selectedTime = timeInput.value;
-  if (selectedTime !== "") {
-    removeTimeBgPurple();
-  }
-});
+// Add error css
+const addError = (input, msg) => {
+  return [
+    input.classList.add("error"),
+    (input.parentElement.nextElementSibling.style.display = "block"),
+    (input.parentElement.parentElement.style.marginBottom = "3px"),
+    (input.parentElement.nextElementSibling.lastElementChild.innerHTML = msg),
+  ];
+};
+// Remove error css
+const removeError = (input) => {
+  return [
+    input.classList.remove("error"),
+    (input.parentElement.nextElementSibling.style.display = "none"),
+    (input.parentElement.parentElement.style.marginBottom = "15px"),
+    (input.parentElement.nextElementSibling.lastElementChild.innerHTML = ""),
+  ];
+};
 
 // Validate input fields on submit button click
 element("#getQuote").addEventListener("click", (event) => {
-  //event.preventDefault();
-  const [pickUpValue, dropOffValue, dateValue, timeValue] = [
-    pickUpLocationInput.value,
-    dropOffLocationInput.value,
-    dateInput.value,
-    timeInput.value,
-  ];
-
   if (
-    pickUpValue &&
-    dropOffValue &&
-    dateValue &&
-    timeValue !== "" &&
+    pickUpLocationInput.value &&
+    dropOffLocationInput.value &&
+    dateInput.value &&
+    timeInput.value !== "" &&
     dateValidationMsg.innerHTML === "" &&
     timeValidationMsg.innerHTML === ""
   ) {
@@ -341,15 +282,27 @@ element("#getQuote").addEventListener("click", (event) => {
     journeyDetail.style.display = "block";
     scrollTo(element(".journeyMain"));
   } else {
-    pickUpValue === "" ? addPickBgPurple() : removePickBgPurple();
-    dropOffValue === "" ? addDropBgPurple() : removeDropBgPurple();
-    dateValue === "" ? addDateBgPurple() : removeDateBgPurple();
-    timeValue === "" ? addTimeBgPurple() : removeTimeBgPurple();
-    journey
-      ? (journeyDetail.style.display = "block")
-      : (journeyDetail.style.display = "none");
+    if (pickUpLocationInput.value === "") {
+      addError(pickUpLocationInput, errorMsg.pickEmpty);
+    }
+
+    if (dropOffLocationInput.value === "") {
+      addError(dropOffLocationInput, errorMsg.dropEmpty);
+    }
+
+    if (timeInput.value === "") {
+      addError(timeInput, errorMsg.timeEmpty);
+    } else {
+      removeError(timeInput);
+    }
+
+    if (journey) {
+      journeyDetail.style.display = "block";
+    } else {
+      journeyDetail.style.display = "none";
+    }
+
     validateDate();
-    //journeyDetail.style.display = "none";
   }
 });
 
@@ -373,19 +326,19 @@ const getDistance = () => {
         alert`(Error: ${status})`;
       } else {
         // Get distance value in metres
-        const distanceInMetre = response.rows[0].elements[0].distance.value;
+        let distanceInMetre = response.rows[0].elements[0].distance.value;
 
         // Change metres to miles and round miles to 2nd decimel point
-        const distanceInMile = ((distanceInMetre / 1000) * 0.621371).toFixed(1);
+        let distanceInMile = ((distanceInMetre / 1000) * 0.621371).toFixed(1);
 
         // Find the time duration
-        const travelDuration = response.rows[0].elements[0].duration.text;
+        let travelDuration = response.rows[0].elements[0].duration.text;
 
         // Find departure address
-        const depatureFullAddress = response.originAddresses[0];
+        let depatureFullAddress = response.originAddresses[0];
 
         // Find arrival address
-        const arrivalFullAddress = response.destinationAddresses[0];
+        let arrivalFullAddress = response.destinationAddresses[0];
 
         // Change travel duration in minutes
         let durationInMinute = 0;
@@ -406,7 +359,7 @@ const getDistance = () => {
 
         // Check browser support for Web Storage
         if (typeof Storage !== "undefined") {
-          const isStorage = localStorage.getItem("travelInfo");
+          let isStorage = localStorage.getItem("travelInfo");
           if (isStorage === null) {
             localStorage.setItem("travelInfo", JSON.stringify(travelDetail));
             window.location.reload();
@@ -432,11 +385,11 @@ window.addEventListener("load", () => {
   if (journey) {
     let storageStartTime = journey.storageTime;
     let storageDuration = Math.floor((currentTime - storageStartTime) / 60000);
-    if (storageDuration >= 60) {
+    if (storageDuration >= 5) {
       localStorage.clear();
       window.location.reload();
       journeyDetail.style.display = "none";
-      alert("Time out");
+      //alert("Time out");
     }
   }
 });
@@ -449,8 +402,8 @@ const displayServiceInfo = () => {
   fetch(url)
     .then((response) => response.json())
     .then((fare) => {
-      const totalFare = fare.map((fare) => {
-        const [farePerMinute, farePerMile, baseFare, minimumFare] = [
+      let totalFare = fare.map((fare) => {
+        let [farePerMinute, farePerMile, baseFare, minimumFare] = [
           fare.farePerMinute,
           fare.farePerMile,
           fare.baseFare,
@@ -458,7 +411,7 @@ const displayServiceInfo = () => {
         ];
 
         if (journey) {
-          const finalFare = (
+          let finalFare = (
             farePerMinute * journey.durationMinute +
             farePerMile * journey.distanceMile +
             baseFare +
@@ -476,16 +429,18 @@ const displayServiceInfo = () => {
     <i class="fas fa-user-friends"><span> ${fare.person}</span></i>
     <i class="fas fa-suitcase"><span> ${fare.luggage}</span></i>
     </div>
-    <button class="selectFareBtn" id=${fare.id} onClick="selectService(this)">SELECT FARE</button>
+    <form method="post">
+    <button class="selectFareBtn" id=${fare.id} onClick="selectService(this)" name=${fare.id} type="submit">SELECT FARE</button>
+    </form>
     </div>
     </div>
     </div>`;
         }
       });
 
-      element("#serviceX").innerHTML = totalFare[0];
-      element("#serviceXL").innerHTML = totalFare[1];
-      element("#serviceXXL").innerHTML = totalFare[2];
+      element("#serviceX").innerHTML += totalFare[0];
+      element("#serviceXL").innerHTML += totalFare[1];
+      element("#serviceXXL").innerHTML += totalFare[2];
     })
     .catch((error) => {
       alert("Request failed", error);
@@ -522,7 +477,7 @@ const selectService = (button) => {
     .then((fare) => {
       fare.map((service) => {
         if (parseInt(service.id) === parseInt(button.id)) {
-          const serviceFare = document.getElementsByClassName("fare")[
+          let serviceFare = document.getElementsByClassName("fare")[
             service.id - 1
           ];
           // Get the existing data and add more object properties
@@ -534,8 +489,7 @@ const selectService = (button) => {
             journey["imgUrl"] = service.imgUrl;
             // Update local storage
             localStorage.setItem("travelInfo", JSON.stringify(journey));
-            window.location.href =
-              "http://localhost:8080/taxi-booking/pages/booking.php";
+            window.location.href = "booking.php";
           }
         }
       });

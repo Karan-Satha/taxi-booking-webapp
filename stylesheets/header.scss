@@ -1,0 +1,147 @@
+@import "./variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", "Roboto Condensed", "Opens Sans", sans-serif;
+}
+
+section {
+  position: relative;
+}
+
+/*Navigation section starts here*/
+nav {
+  position: relative;
+  @extend %flex-center;
+
+  .navMainContainer {
+    width: 100%;
+    height: 80px;
+    background-color: color(primary-white);
+    box-shadow: 0 2px 8px color(light-purple);
+
+    img {
+      height: 80px;
+      width: 180px;
+      margin-left: 2.5%;
+    }
+  }
+  .userLink {
+    position: absolute;
+    top: 22px;
+    right: 120px;
+    display: flex;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      margin: 5px;
+      font-weight: 900;
+      color: color(font-blue);
+      vertical-align: center;
+      font-size: 1.1em;
+    }
+
+    a:first-child {
+      border-right: 2px solid color(border-grey);
+      padding-right: 10px;
+    }
+
+    .logout {
+      font-size: 1em;
+      font-weight: normal;
+    }
+
+    i {
+      font-size: 1.2em;
+      color: color(font-blue);
+      margin-left: 10px;
+    }
+  }
+
+  .toggleNavContainer {
+    position: absolute;
+    right: 2.5%;
+    top: 5px;
+    width: 70px;
+    height: 70px;
+
+    .navInnerContainer {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      border: 10px solid color(lightest-blue);
+
+      .navIconContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 75%;
+        width: 75%;
+        border-radius: 50%;
+        background-color: color(primary-blue);
+        @include transform(translate(-50%, -50%));
+
+        .barContainer {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%, -50%));
+
+          .line1,
+          .line2,
+          .line3 {
+            height: 2px;
+            border-radius: 50px;
+            width: 25px;
+            background-color: color(primary-white);
+            margin: 5px 0;
+            @include transition(0.5s);
+          }
+        }
+      }
+    }
+  }
+}
+
+.navInnerContainer-hover {
+  animation-name: zoomOut;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes zoomOut {
+  0% {
+    background-color: color(primary-white);
+    border: 10px solid color(primary-white);
+  }
+
+  100% {
+    background-color: rgba(15, 172, 243, 0.3);
+    border: 10px solid rgba(15, 172, 243, 0.3);
+  }
+}
+
+.crossIcon .line1 {
+  @include transform(translate(0px, 7px) rotate(-45deg));
+}
+
+.crossIcon .line2 {
+  opacity: 0;
+}
+
+.crossIcon .line3 {
+  @include transform(translate(0px, -7px) rotate(45deg));
+}
+
+/* Navigation section ends here */

@@ -3,8 +3,28 @@ const element = (id) => {
   return document.querySelector(id);
 };
 
+const elementAll = (id) => {
+  return document.querySelectorAll(id);
+};
+
+document.onreadystatechange = function () {
+  let state = document.readyState;
+  if (state == "interactive") {
+    element("body").style.visibility = "hidden";
+    element(".loader").style.visibility = "visible";
+  } else if (state == "complete") {
+    element(".loader").style.visibility = "hidden";
+    element("body").style.visibility = "visible";
+  }
+};
+
 // Get booking data from local storage
 const bookingData = JSON.parse(localStorage.getItem("travelInfo"));
+
+// Redirect to home page if local storage does not exist
+if (bookingData === null) {
+  window.location.href = "index.php";
+}
 
 // Access booking data and display
 element("#pickAddress").innerHTML = bookingData.originAddress;
@@ -14,7 +34,7 @@ element("#date").innerHTML = new Date(bookingData.date).toDateString();
 element("#time").innerHTML = bookingData.time;
 element(
   "#car"
-).innerHTML = `<img src=".${bookingData.imgUrl}" /> ${bookingData.carType}`;
+).innerHTML = `<img src="${bookingData.imgUrl}" /> ${bookingData.carType}`;
 
 element(
   "#people"
@@ -43,10 +63,12 @@ const errorMsg = {
   invalidPhone: "Invalid phone number",
   emptyPassanger: "Please select the number of passanger",
   invalidPassanger: "Number of passangers must not exceed",
+  payPalIncomplete: "PayPal payment is incomplete",
+  emptyPayment: "Please select a payment option",
 };
 
 const regEx = {
-  name: /[^a-zA-Z\s]/g,
+  name: /^[a-zA-Z-,]+\s[a-zA-Z-,]+(\s?)([a-zA-Z-,]?)+$/,
   email: /\S+@\S+\.\S+/,
   phone: /^[7]\d{8,9}$/,
 };
@@ -81,7 +103,7 @@ const handler = (event) => {
     if (input.value == "" && input.id == "name") {
       addFocusOut();
       error.innerHTML = errorMsg.emptyName;
-    } else if (input.id == "name" && input.value.match(regEx.name)) {
+    } else if (input.id == "name" && !input.value.match(regEx.name)) {
       addFocusOut();
       error.innerHTML = errorMsg.invalidName;
 
@@ -118,7 +140,7 @@ const handler = (event) => {
 };
 
 // Add event handler to input fields
-document.querySelectorAll(".userInputBook").forEach((input) => {
+elementAll(".userInputBook").forEach((input) => {
   input.addEventListener("focus", handler);
   input.addEventListener("blur", handler);
 });
@@ -127,7 +149,7 @@ document.querySelectorAll(".userInputBook").forEach((input) => {
 const activatePersonal = () => {
   element("#activePersonalCircle").style.backgroundColor = "#00ab66";
   element("#activePersonalLine").style.backgroundColor = "#00ab66";
-  element("#activePersonalCircle").innerHTML = `<i class="fas fa-check"></i>`; 
+  element("#activePersonalCircle").innerHTML = `<i class="fas fa-check"></i>`;
 };
 
 // Remove color of personal of progress bar
@@ -167,7 +189,7 @@ const stickProgressBar = () => {
 };
 
 // Disable payment options
-document.querySelectorAll(".userInputBook").forEach((input) => {
+elementAll(".userInputBook").forEach((input) => {
   let name = element("#name");
   let email = element("#email");
   let phone = element("#phone");
@@ -183,7 +205,7 @@ document.querySelectorAll(".userInputBook").forEach((input) => {
       disableRadioBtn();
       removePersonal();
     } else if (
-      name.value.match(regEx.name) ||
+      !name.value.match(regEx.name) ||
       !email.value.match(regEx.email) ||
       !phone.value.match(regEx.phone)
     ) {
@@ -197,7 +219,7 @@ document.querySelectorAll(".userInputBook").forEach((input) => {
 });
 
 // Remove payment error message
-document.querySelectorAll("input[name='payment']").forEach((event) => {
+elementAll("input[name='payment']").forEach((event) => {
   event.addEventListener("click", () => {
     let paymentError = element("#payErrorMsg");
     let cash = element("#cash");
@@ -221,91 +243,76 @@ element("#bookingForm").addEventListener("submit", (event) => {
   let cash = element("#cash");
   let creditCard = element("#creditCard");
   let payPal = element("#payPal");
+  let paymentId = element("#paymentId");
   let noOfPass = passanger.value.split(" ");
+  element("#loadBackground").style.visibility = "visible";
 
   // Add CSS to input fields
-  let displayError = (input) => {
+  let displayError = (input, errorMessage) => {
     return [
       input.classList.add("error"),
       (input.nextElementSibling.style.display = "block"),
       (input.style.marginBottom = "0px"),
+      (input.nextElementSibling.lastElementChild.innerHTML = errorMessage),
+      (element("#loadBackground").style.visibility = "hidden"),
+      event.preventDefault(),
+    ];
+  };
+
+  let payError = (input, errorMessage) => {
+    return [
+      (input.style.display = "block"),
+      (input.lastElementChild.textContent = errorMessage),
+      (element("#loadBackground").style.visibility = "hidden"),
+      event.preventDefault(),
     ];
   };
 
   // Check name
   if (name.value === "") {
-    displayError(name);
-    name.nextElementSibling.lastElementChild.innerHTML = errorMsg.emptyName;
-    event.preventDefault();
+    displayError(name, errorMsg.emptyName);
   } else {
-    if (name.value.match(regEx.name)) {
-      displayError(name);
-      name.nextElementSibling.lastElementChild.innerHTML = errorMsg.invalidName;
-      event.preventDefault();
+    if (!name.value.match(regEx.name)) {
+      displayError(name, errorMsg.invalidName);
     }
   }
-
   // Check email
   if (email.value === "") {
-    displayError(email);
-    email.nextElementSibling.lastElementChild.innerHTML = errorMsg.emptyEmail;
-    event.preventDefault();
+    displayError(email, errorMsg.emptyEmail);
   } else {
     if (!email.value.match(regEx.email)) {
-      displayError(email);
-      email.nextElementSibling.lastElementChild.innerHTML =
-        errorMsg.invalidEmail;
-      event.preventDefault();
+      displayError(email, errorMsg.invalidEmail);
     }
   }
-
   // Check phone number
   if (phone.value === "") {
-    displayError(phone);
-    phone.nextElementSibling.lastElementChild.innerHTML = errorMsg.emptyPhone;
-    event.preventDefault();
+    displayError(phone, errorMsg.emptyPhone);
   } else {
     if (!phone.value.match(regEx.phone)) {
-      displayError(phone);
-      phone.nextElementSibling.lastElementChild.innerHTML =
-        errorMsg.invalidPhone;
-      event.preventDefault();
+      displayError(phone, errorMsg.invalidPhone);
     }
   }
-
   // Check passanger number
   if (passanger.value === "--Select passanger--") {
-    displayError(passanger);
-    passanger.nextElementSibling.lastElementChild.innerHTML =
-      errorMsg.emptyPassanger;
-    event.preventDefault();
+    displayError(passanger, errorMsg.emptyPassanger);
   } else {
     if (noOfPass[0] > bookingData.people) {
       displayError(passanger);
       passanger.nextElementSibling.lastElementChild.innerHTML = `${errorMsg.invalidPassanger} ${bookingData.people}`;
-      event.preventDefault();
     }
   }
-
   // Check payment
   if (cash.checked || creditCard.checked) {
     return true;
   } else if (payPal.checked) {
-    if (element("#paymentId").value === "") {
-      paymentError.style.display = "block";
-      paymentError.lastElementChild.textContent =
-        "PayPal payment is incomplete";
-      event.preventDefault();
+    if (paymentId.value === "") {
+      payError(paymentError, errorMsg.payPalIncomplete);
     } else {
       return true;
     }
   } else {
-    paymentError.style.display = "block";
-    paymentError.lastElementChild.textContent =
-      "Please select a payment option";
-    event.preventDefault();
+    payError(paymentError, errorMsg.emptyPayment);
   }
-
   return true;
 });
 
@@ -388,7 +395,7 @@ const enableRadioBtn = () => {
 };
 
 // Show panel on payment radio button click
-document.querySelectorAll("input[type='radio']").forEach((event) => {
+elementAll("input[type='radio']").forEach((event) => {
   event.addEventListener("click", function (radio) {
     let panel = radio.target.parentElement.nextElementSibling;
     let icon = radio.target.parentElement.lastElementChild;

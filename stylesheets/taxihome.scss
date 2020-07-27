@@ -1,156 +1,4 @@
 @import "./variables.scss";
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Quicksand", "Roboto Condensed", "Opens Sans", sans-serif;
-}
-
-section {
-  position: relative;
-}
-
-/*Navigation section starts here*/
-nav {
-  position: relative;
-  @extend %flex-center;
-
-  .navMainContainer {
-    width: 100%;
-    height: 80px;
-    background-color: color(primary-white);
-    box-shadow: 0 2px 8px color(light-purple);
-
-    .logoLocationC {
-      height: 80px;
-      width: 80px;
-      display: table;
-
-      i {
-        @extend %align-center;
-        font-size: 70px;
-        position: relative;
-        color: color(primary-blue);
-
-        .logoCar {
-          width: 40px;
-          height: 40px;
-          position: absolute;
-          top: 12px;
-          right: 20px;
-          border-radius: 50%;
-          background-color: color(primary-white);
-          display: table;
-
-          i {
-            font-size: 24px;
-            @extend %align-center;
-            color: color(primary-purple);
-          }
-        }
-      }
-    }
-  }
-}
-
-.logoNameC {
-  position: absolute;
-  left: 70px;
-  font-size: 25px;
-  font-weight: bolder;
-
-  p:first-child {
-    color: color(primary-purple);
-  }
-
-  p:last-child {
-    color: color(primary-blue);
-  }
-}
-
-.toggleNavContainer {
-  position: absolute;
-  right: 20px;
-  top: 5px;
-  width: 70px;
-  height: 70px;
-
-  .navInnerContainer {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    border-radius: 50%;
-    border: 10px solid color(lightest-blue);
-
-    .navIconContainer {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 75%;
-      width: 75%;
-      border-radius: 50%;
-      background-color: color(primary-blue);
-      @include transform(translate(-50%, -50%));
-
-      .barContainer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        @include transform(translate(-50%, -50%));
-
-        .line1,
-        .line2,
-        .line3 {
-          height: 2px;
-          border-radius: 50px;
-          width: 25px;
-          background-color: color(primary-white);
-          margin: 5px 0;
-          @include transition(0.5s);
-        }
-      }
-    }
-  }
-}
-
-.navInnerContainer-hover {
-  animation-name: zoomOut;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-delay: 0;
-  animation-direction: alternate;
-  animation-fill-mode: none;
-  animation-play-state: running;
-}
-
-@keyframes zoomOut {
-  0% {
-    background-color: color(primary-white);
-    border: 10px solid color(primary-white);
-  }
-
-  100% {
-    background-color: rgba(15, 172, 243, 0.3);
-    border: 10px solid rgba(15, 172, 243, 0.3);
-  }
-}
-
-.crossIcon .line1 {
-  @include transform(translate(0px, 7px) rotate(-45deg));
-}
-
-.crossIcon .line2 {
-  opacity: 0;
-}
-
-.crossIcon .line3 {
-  @include transform(translate(0px, -7px) rotate(45deg));
-}
-
-/* Navigation section ends here */
 
 /* Home section starts here */
 
@@ -194,18 +42,19 @@ nav {
 
         // Date
         .mainInputContainer {
-          margin: 1px 15px 1px 15px;
+          margin: 1px 15px 15px 15px;
 
           p {
             margin-left: 5px;
-            margin-bottom: 1px;
+            // margin-bottom: 1px;
             font-weight: bolder;
             color: color(font-blue);
+            // font-family: "Opens Sans", sans-serif;
           }
 
           .inputContainer {
             position: relative;
-            background-color: color(light-grey);
+            // background-color: color(light-grey);
             display: flex;
             align-items: center;
 
@@ -345,12 +194,12 @@ nav {
   // border-radius: 25px;
 }
 
-.userInputAddress:focus {
-  outline: none;
-  border-style: none;
-  border: 3px solid color(primary-blue);
-  // @include transition(1s);
-}
+// .userInputAddress:focus {
+//   outline: none;
+//   border-style: none;
+//   border: 3px solid color(primary-blue);
+//   // @include transition(1s);
+// }
 
 .userInput {
   width: 98%;
@@ -361,17 +210,12 @@ nav {
   // border-radius: 25px;
 }
 
-.userInput:focus {
-  outline: none;
-  border-style: none;
-  border: 3px solid color(primary-blue);
-  // @include transition(1s);
-}
-
-.mainInputContainer {
-  //border: 1px solid red;
-  //margin: 1px 15px 5px 15px;
-}
+// .userInput:focus {
+//   outline: none;
+//   border-style: none;
+//   border: 3px solid color(primary-blue);
+//   // @include transition(1s);
+// }
 
 .mainInputContainer:nth-child(3) {
   width: 44%;
@@ -397,51 +241,6 @@ nav {
 
 .getQuoteBtnContainer {
   clear: both;
-}
-
-#pickUpAddressValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#dropOffAddressValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#dateValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#timeValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-.changeBgBlue {
-  background-color: color(lightest-blue);
-  @include transition(1s);
-}
-
-.changeBorderBlue {
-  outline: none;
-  border-style: none;
-  border: 3px solid color(primary-blue);
-}
-
-.changeBgPurple {
-  background-color: color(light-purple);
-  @include transition(1s);
-}
-
-.changeBorderPurple {
-  border: 3px solid color(primary-purple);
-  // @include transition(1s);
 }
 
 /* Home section ends here */
@@ -604,11 +403,13 @@ nav {
   .selectServiceContainer {
     width: 48.5%;
     margin-left: 1.5%;
+    position: relative;
 
     #packageInfo {
       @extend %flex-center;
       flex-direction: column;
       align-content: flex-end;
+      // visibility: hidden;
 
       article {
         width: 100%;
@@ -617,11 +418,13 @@ nav {
         background-color: color(primary-white);
         margin-bottom: 10px;
         border-bottom: 2px solid color(primary-blue);
+        position: relative;
 
         .serviceType {
           @extend %flex-center;
           height: 100%;
           position: relative;
+          visibility: hidden;
 
           .fare {
             background-color: color(primary-blue);
@@ -737,4 +540,85 @@ nav {
     left: 0px;
     top: 58px;
   }
+}
+
+#loader {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 5px solid color(primary-purple);
+  border-top-color: color(border-grey);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 -30px;
+  animation: spin 2s linear infinite;
+}
+
+.journeyLoad {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 5px solid #f3f3f3;
+  border: 5px solid color(primary-purple);
+  border-top-color: color(border-grey);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.focus {
+  outline: none;
+  border-style: none;
+  border: 3px solid color(primary-blue);
+  box-shadow: 0px 0px 0px 3px color(lightest-blue);
+}
+
+.error {
+  outline: none;
+  border-style: none;
+  border: 3px solid color(warning-red);
+  box-shadow: 0px 0px 0px 3px color(light-red);
+}
+
+.errorMsgHome {
+  background-color: color(light-red);
+  width: 98%;
+  margin: 6px 1% 2px 1%;
+  padding: 7px 9px;
+  position: relative;
+  color: color(warning-red);
+  display: none;
+
+  i {
+    font-size: 13px;
+    margin-right: 10px;
+    margin-top: 4px;
+    float: left;
+  }
+
+  p {
+    color: color(warning-red) !important;
+    font-weight: normal !important;
+  }
+}
+
+.errorMsgHome:before {
+  content: "";
+  position: absolute;
+  border: solid 8px transparent;
+  top: -15px;
+  left: 15px;
+  border-bottom-color: color(light-red);
 }

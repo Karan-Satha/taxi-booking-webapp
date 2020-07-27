@@ -1,0 +1,46 @@
+@import "./variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", "Roboto Condensed", "Opens Sans", sans-serif;
+}
+
+.confirmMain {
+  text-align: center;
+  margin-top: 40px;
+
+  h1 {
+    color: color(font-color);
+    text-align: center;
+    font-size: 3em;
+  }
+
+  i {
+    font-size: 2em;
+    color: color(check-green);
+    -webkit-text-stroke: 2px color(primary-white);
+    margin-top: 30px;
+    border: 4px solid color(check-green);
+    border-radius: 50%;
+    padding: 10px;
+  }
+
+  p:first-of-type {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: bolder;
+    font-size: 1.5em;
+  }
+
+  a {
+    color: color(primary-blue);
+    font-weight: bolder;
+    display: inline-block;
+    margin-top: 30px;
+  }
+}

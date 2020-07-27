@@ -11,13 +11,13 @@
   font-weight: bold;
 }
 
-nav .navMainContainer .logoLocationC i, nav .navMainContainer .logoLocationC i .logoCar i, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer .inputContainer .inputIconContainer i, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer .inputContainer .removeIconContainer i, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .journeyDetailDisplay .iconContainer i, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .distanceDisplay .iconContainer i {
+.homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer .inputContainer .inputIconContainer i, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer .inputContainer .removeIconContainer i, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .journeyDetailDisplay .iconContainer i, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .distanceDisplay .iconContainer i {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
 
-.journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .journeyDetailDisplay, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .distanceDisplay, nav, .homeMain .homeSection .homeMainContainer, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .getQuoteTopBanner, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .getQuoteBtnContainer, .pac-item, .journeyMainSection, .journeyMainSection .journeyDetailsDisplay .distanceMarkerContainer, .journeyMainSection .selectServiceContainer #packageInfo, .journeyMainSection .selectServiceContainer #packageInfo article .serviceType, .journeyMainSection .selectServiceContainer #packageInfo article .serviceType .buttonContainer {
+.journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .journeyDetailDisplay, .journeyMainSection .journeyDetailsDisplay .journeyDetailsInnerC .distanceDisplay, .homeMain .homeSection .homeMainContainer, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .getQuoteTopBanner, .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .getQuoteBtnContainer, .pac-item, .journeyMainSection, .journeyMainSection .journeyDetailsDisplay .distanceMarkerContainer, .journeyMainSection .selectServiceContainer #packageInfo, .journeyMainSection .selectServiceContainer #packageInfo article .serviceType, .journeyMainSection .selectServiceContainer #packageInfo article .serviceType .buttonContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -48,179 +48,6 @@ nav .navMainContainer .logoLocationC i, nav .navMainContainer .logoLocationC i .
   background-color: #e5e5e5;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-body {
-  font-family: "Quicksand", "Roboto Condensed", "Opens Sans", sans-serif;
-}
-
-section {
-  position: relative;
-}
-
-/*Navigation section starts here*/
-nav {
-  position: relative;
-}
-
-nav .navMainContainer {
-  width: 100%;
-  height: 80px;
-  background-color: #ffffff;
-  -webkit-box-shadow: 0 2px 8px #e8daef;
-          box-shadow: 0 2px 8px #e8daef;
-}
-
-nav .navMainContainer .logoLocationC {
-  height: 80px;
-  width: 80px;
-  display: table;
-}
-
-nav .navMainContainer .logoLocationC i {
-  font-size: 70px;
-  position: relative;
-  color: #0facf3;
-}
-
-nav .navMainContainer .logoLocationC i .logoCar {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 12px;
-  right: 20px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  display: table;
-}
-
-nav .navMainContainer .logoLocationC i .logoCar i {
-  font-size: 24px;
-  color: #af81c9;
-}
-
-.logoNameC {
-  position: absolute;
-  left: 70px;
-  font-size: 25px;
-  font-weight: bolder;
-}
-
-.logoNameC p:first-child {
-  color: #af81c9;
-}
-
-.logoNameC p:last-child {
-  color: #0facf3;
-}
-
-.toggleNavContainer {
-  position: absolute;
-  right: 20px;
-  top: 5px;
-  width: 70px;
-  height: 70px;
-}
-
-.toggleNavContainer .navInnerContainer {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
-  border: 10px solid #a1defa;
-}
-
-.toggleNavContainer .navInnerContainer .navIconContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 75%;
-  width: 75%;
-  border-radius: 50%;
-  background-color: #0facf3;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.toggleNavContainer .navInnerContainer .navIconContainer .barContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.toggleNavContainer .navInnerContainer .navIconContainer .barContainer .line1,
-.toggleNavContainer .navInnerContainer .navIconContainer .barContainer .line2,
-.toggleNavContainer .navInnerContainer .navIconContainer .barContainer .line3 {
-  height: 2px;
-  border-radius: 50px;
-  width: 25px;
-  background-color: #ffffff;
-  margin: 5px 0;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-}
-
-.navInnerContainer-hover {
-  -webkit-animation-name: zoomOut;
-          animation-name: zoomOut;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-  -webkit-animation-delay: 0;
-          animation-delay: 0;
-  -webkit-animation-direction: alternate;
-          animation-direction: alternate;
-  -webkit-animation-fill-mode: none;
-          animation-fill-mode: none;
-  -webkit-animation-play-state: running;
-          animation-play-state: running;
-}
-
-@-webkit-keyframes zoomOut {
-  0% {
-    background-color: #ffffff;
-    border: 10px solid #ffffff;
-  }
-  100% {
-    background-color: rgba(15, 172, 243, 0.3);
-    border: 10px solid rgba(15, 172, 243, 0.3);
-  }
-}
-
-@keyframes zoomOut {
-  0% {
-    background-color: #ffffff;
-    border: 10px solid #ffffff;
-  }
-  100% {
-    background-color: rgba(15, 172, 243, 0.3);
-    border: 10px solid rgba(15, 172, 243, 0.3);
-  }
-}
-
-.crossIcon .line1 {
-  -webkit-transform: translate(0px, 7px) rotate(-45deg);
-  transform: translate(0px, 7px) rotate(-45deg);
-}
-
-.crossIcon .line2 {
-  opacity: 0;
-}
-
-.crossIcon .line3 {
-  -webkit-transform: translate(0px, -7px) rotate(45deg);
-  transform: translate(0px, -7px) rotate(45deg);
-}
-
-/* Navigation section ends here */
 /* Home section starts here */
 .homeMain {
   background: url(../images/taxi-background1.png) no-repeat bottom;
@@ -248,8 +75,8 @@ nav .navMainContainer .logoLocationC i .logoCar i {
 
 .homeMain .homeSection .homeMainContainer .getQuoteMainContainer {
   outline: none;
-  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 2px 8px rgba(124, 124, 139, 0.1);
+          box-shadow: 0 2px 8px rgba(124, 124, 139, 0.1);
   background-color: #ffffff;
   width: 500px;
 }
@@ -267,12 +94,11 @@ nav .navMainContainer .logoLocationC i .logoCar i {
 }
 
 .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer {
-  margin: 1px 15px 1px 15px;
+  margin: 1px 15px 15px 15px;
 }
 
 .homeMain .homeSection .homeMainContainer .getQuoteMainContainer .mainInputContainer p {
   margin-left: 5px;
-  margin-bottom: 1px;
   font-weight: bolder;
   color: #162a3a;
 }
@@ -414,24 +240,12 @@ nav .navMainContainer .logoLocationC i .logoCar i {
   border: 2px solid #26292c;
 }
 
-.userInputAddress:focus {
-  outline: none;
-  border-style: none;
-  border: 3px solid #0facf3;
-}
-
 .userInput {
   width: 98%;
   margin: 1%;
   height: 50px;
   padding-left: 45px;
   border: 2px solid #26292c;
-}
-
-.userInput:focus {
-  outline: none;
-  border-style: none;
-  border: 3px solid #0facf3;
 }
 
 .mainInputContainer:nth-child(3) {
@@ -460,52 +274,6 @@ nav .navMainContainer .logoLocationC i .logoCar i {
   clear: both;
 }
 
-#pickUpAddressValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#dropOffAddressValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#dateValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-#timeValid {
-  height: 18px;
-  font-size: 15px;
-  color: red;
-}
-
-.changeBgBlue {
-  background-color: #a1defa;
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.changeBorderBlue {
-  outline: none;
-  border-style: none;
-  border: 3px solid #0facf3;
-}
-
-.changeBgPurple {
-  background-color: #e8daef;
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.changeBorderPurple {
-  border: 3px solid #af81c9;
-}
-
 /* Home section ends here */
 /* Change google auto address complete default CSS */
 .pac-container:after {
@@ -517,8 +285,8 @@ nav .navMainContainer .logoLocationC i .logoCar i {
 
 .pac-container {
   border-radius: 0;
-  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 2px 8px rgba(124, 124, 139, 0.1);
+          box-shadow: 0 2px 8px rgba(124, 124, 139, 0.1);
   margin-top: 3px;
   border-top: 0px solid #ffffff;
 }
@@ -651,6 +419,7 @@ nav .navMainContainer .logoLocationC i .logoCar i {
 .journeyMainSection .selectServiceContainer {
   width: 48.5%;
   margin-left: 1.5%;
+  position: relative;
 }
 
 .journeyMainSection .selectServiceContainer #packageInfo {
@@ -669,11 +438,13 @@ nav .navMainContainer .logoLocationC i .logoCar i {
   background-color: #ffffff;
   margin-bottom: 10px;
   border-bottom: 2px solid #0facf3;
+  position: relative;
 }
 
 .journeyMainSection .selectServiceContainer #packageInfo article .serviceType {
   height: 100%;
   position: relative;
+  visibility: hidden;
 }
 
 .journeyMainSection .selectServiceContainer #packageInfo article .serviceType .fare {
@@ -799,5 +570,103 @@ nav .navMainContainer .logoLocationC i .logoCar i {
     left: 0px;
     top: 58px;
   }
+}
+
+#loader {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: 5px solid #af81c9;
+  border-top-color: #e5e5e5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 -30px;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+}
+
+.journeyLoad {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 5px solid #f3f3f3;
+  border: 5px solid #af81c9;
+  border-top-color: #e5e5e5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  -webkit-animation: spin 2s linear infinite;
+          animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.focus {
+  outline: none;
+  border-style: none;
+  border: 3px solid #0facf3;
+  -webkit-box-shadow: 0px 0px 0px 3px #a1defa;
+          box-shadow: 0px 0px 0px 3px #a1defa;
+}
+
+.error {
+  outline: none;
+  border-style: none;
+  border: 3px solid #e4134f;
+  -webkit-box-shadow: 0px 0px 0px 3px #feeef3;
+          box-shadow: 0px 0px 0px 3px #feeef3;
+}
+
+.errorMsgHome {
+  background-color: #feeef3;
+  width: 98%;
+  margin: 6px 1% 2px 1%;
+  padding: 7px 9px;
+  position: relative;
+  color: #e4134f;
+  display: none;
+}
+
+.errorMsgHome i {
+  font-size: 13px;
+  margin-right: 10px;
+  margin-top: 4px;
+  float: left;
+}
+
+.errorMsgHome p {
+  color: #e4134f !important;
+  font-weight: normal !important;
+}
+
+.errorMsgHome:before {
+  content: "";
+  position: absolute;
+  border: solid 8px transparent;
+  top: -15px;
+  left: 15px;
+  border-bottom-color: #feeef3;
 }
 /*# sourceMappingURL=taxihome.css.map */

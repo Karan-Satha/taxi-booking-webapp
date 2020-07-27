@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <?php
 
+// Start session
+session_start();
+$_SESSION["currentpage"] = $_SERVER['REQUEST_URI'];
+
+// Set session
+if (isset($_POST["1"])) {
+    $_SESSION["package"] = "saloon";
+} else if (isset($_POST["2"])) {
+    $_SESSION["package"] = "6seater";
+} else if (isset($_POST["3"])) {
+    $_SESSION["package"] = "9seater";
+}
+
 ?>
 <html>
 
 <head>
     <?php include "templates/head.php";?>
-
-    <!--Call CSS file-->
+    <!-- Home css-->
     <link rel="stylesheet" href="stylesheets/taxihome.css" />
+    <!-- Header css -->
+    <link rel="stylesheet" href="stylesheets/header.css" />
 </head>
 
 <body>
-    <div id="loader" class="center">Loading...</div>
+    <div id="loader"></div>
     <main class="homeMain">
-
         <!-- Navigation section starts here -->
-
         <section>
             <article>
                 <?php include "templates/header.php";?>
             </article>
         </section>
-
         <!--Home section starts here-->
-
         <section class="homeSection">
             <div class="homeMainContainer">
                 <article>
@@ -32,13 +42,9 @@
                         <div class="getQuoteTopBanner">
                             <h3>Get your quote today</h3>
                         </div>
-
                         <!-- Form starts here -->
-
                         <form>
-
                             <!-- Pick up location input-->
-
                             <div class="mainInputContainer">
                                 <p>From (Pickup Location)</p>
                                 <div class="inputContainer" id="inputPickContainer">
@@ -51,11 +57,12 @@
                                     <input type="text" class="userInputAddress" id="pickUpLocation"
                                         placeholder="e.g: TW6 1EW or Heathrow Terminals 2" />
                                 </div>
-                                <div id="pickUpAddressValid"></div>
+                                <div class="errorMsgHome">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p></p>
+                                </div>
                             </div>
-
                             <!-- Drop off location input -->
-
                             <div class="mainInputContainer">
                                 <p>To (Dropoff Location)</p>
                                 <div class="inputContainer" id="inputDropContainer">
@@ -68,11 +75,12 @@
                                     <input type="text" class="userInputAddress" id="dropOffLocation"
                                         placeholder="e.g: HA2 8PW or Harrow" />
                                 </div>
-                                <div id="dropOffAddressValid"></div>
+                                <div class="errorMsgHome">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p></p>
+                                </div>
                             </div>
-
                             <!-- Pickup date input -->
-
                             <div class="mainInputContainer">
                                 <p>Pickup Date</p>
                                 <div class="inputContainer" id="inputDateContainer">
@@ -84,11 +92,12 @@
                                     </div>
                                     <input type="text" onfocus="(this.type='date')" class="userInput" id="date" />
                                 </div>
-                                <div id="dateValid"></div>
+                                <div class="errorMsgHome">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p id="dateValid"></p>
+                                </div>
                             </div>
-
                             <!-- Pickup time input -->
-
                             <div class="mainInputContainer">
                                 <p>Pickup Time</p>
                                 <div class="inputContainer" id="inputTimeContainer">
@@ -102,18 +111,18 @@
                                         <option value="" disabled selected hidden>e.g: 12:00</option>
                                     </select>
                                 </div>
-                                <div id="timeValid"></div>
+                                <div class="errorMsgHome">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p id="timeValid"></p>
+                                </div>
                             </div>
                         </form>
-
                         <!-- Submit button -->
-
                         <div class="getQuoteBtnContainer" id="getQuoteBtnCId">
                             <button id="getQuote" class="getQuoteButton">
                                 GET QUOTE
                             </button>
                         </div>
-
                     </div>
                     <div class="homeMessageContainer">
                         <p>Reach your destination with our reliable, fast and professional
@@ -124,11 +133,8 @@
         </section>
     </main>
     <main class="journeyMain" id="journeyMain">
-
         <!-- Journey details start here  -->
-
         <div class="editDetailContainer">Journey details<button class="editQuoteBtn">EDIT QUOTE</button>
-
         </div>
         <section class="journeyMainSection">
             <article class="journeyDetailsDisplay" id="journeyDetailsDisplayId">
@@ -138,7 +144,6 @@
                 </div>
                 <div class="journeyDetailsInnerC">
                     <!-- Start location details -->
-
                     <section class="journeyDetailDisplay">
                         <!-- <div class="journeyDetailHeading">Pickup address</div> -->
                         <div class="iconContainer">
@@ -151,9 +156,7 @@
                             </div>
                         </div>
                     </section>
-
                     <!-- End location details  -->
-
                     <section class="journeyDetailDisplay">
                         <!-- <div class="journeyDetailHeading">Dropoff address</div> -->
                         <div class="iconContainer">
@@ -166,9 +169,7 @@
                             </div>
                         </div>
                     </section>
-
                     <!-- Distance details  -->
-
                     <section class="distanceDisplay">
                         <!-- <div class="journeyDetailHeading">Estimated distance</div> -->
                         <div class="iconContainer">
@@ -182,9 +183,7 @@
                         </div>
                         <div id="distanceKm"></div>
                     </section>
-
                     <!-- Time duration details  -->
-
                     <section class="journeyDetailDisplay">
                         <!-- <div class="journeyDetailHeading">Estimated duration</div> -->
                         <div class="iconContainer">
@@ -197,9 +196,7 @@
                             </div>
                         </div>
                     </section>
-
                     <!-- Travel date details  -->
-
                     <section class="journeyDetailDisplay">
                         <!-- <div class="journeyDetailHeading">Pickup date</div> -->
                         <div class="iconContainer">
@@ -212,9 +209,7 @@
                             </div>
                         </div>
                     </section>
-
                     <!-- Travel time details  -->
-
                     <section class="journeyDetailDisplay">
                         <!-- <div class="journeyDetailHeading">Pickup time</div> -->
                         <div class="iconContainer">
@@ -230,10 +225,17 @@
                 </div>
             </article>
             <article class="selectServiceContainer">
+                <!-- <div id="journeyLoad"></div> -->
                 <section id="packageInfo">
-                    <article id="serviceX"></article>
-                    <article id="serviceXL"></article>
-                    <article id="serviceXXL"></article>
+                    <article id="serviceX">
+                        <div class="journeyLoad">
+                    </article>
+                    <article id="serviceXL">
+                        <div class="journeyLoad">
+                    </article>
+                    <article id="serviceXXL">
+                        <div class="journeyLoad">
+                    </article>
                 </section>
             </article>
         </section>
@@ -243,7 +245,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--Internal JavaScript file-->
-    <script src="scripts/taxibooking.js"></script>
+    <script src="scripts/index.js"></script>
 
     <!--Call google map API service-->
     <script

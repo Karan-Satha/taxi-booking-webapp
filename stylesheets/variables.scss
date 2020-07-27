@@ -9,11 +9,13 @@ $colors: (
   background-color: #f3fbfe,
   font-blue: #162a3a,
   font-light-grey: #5d6b79,
+  check-green: #00ab66,
   lightest-blue: lighten(#0facf3, 30%),
   lighter-blue: lighten(#0facf3, 15%),
   light-purple: lighten(#af81c9, 25%),
+  lighter-purple: #dedef8,
   warning-red: #e4134f,
-  light-red: lighten(#e4134f, 45%),
+  light-red: lighten(#e4134f, 48%),
 );
 
 @function color($color-name) {
@@ -21,7 +23,8 @@ $colors: (
 }
 
 $shadows: (
-  main-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+  // main-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+    main-shadow: 0 2px 8px rgba(124, 124, 139, 0.1)
 );
 
 @function shadow($shadow-name) {

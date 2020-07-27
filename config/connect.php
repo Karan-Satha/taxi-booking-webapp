@@ -1,8 +1,13 @@
 <?php
 // Connect to database
-$conn = mysqli_connect('localhost', 'karan', 'karan1983', 'taxi_db');
+$serverName = "localhost";
+$userName = "karan";
+$password = "karan1983";
+$databaseName = "taxi_db";
+
+$conn = new mysqli($serverName, $userName, $password, $databaseName);
 
 // Check connection
-if (!$conn) {
-    echo "connection error" . mysqli_connect_error();
+if ($conn->connect_error) {
+    die("connection error: " . $conn->connect_error);
 }
